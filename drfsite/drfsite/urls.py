@@ -1,10 +1,30 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from pupils.views import PupilsAPIView
+from pupils.views import *
+
+from rest_framework import routers
+
+
+router = routers.SimpleRouter()
+router.register(r'pupil', PupilsViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/pupil-list/', PupilsAPIView.as_view()),
-    path('api/v1/pupil-list/<int:pk>/', PupilsAPIView.as_view()),
+
+    # routers
+    path('api/v1/', include(router.urls)),  # http://127.0.0.1:8000/api/v1/pupil/
+
+    # viewsets
+    # path('api/v1/pupil-list/', PupilsViewSet.as_view({'get': 'list'})),
+    # path('api/v1/pupil-list/<int:pk>/', PupilsViewSet.as_view({'put': 'update'})),
+
+    # path('api/v1/pupil-list/', PupilsAPIList.as_view()),
+    # path('api/v1/pupil-list/<int:pk>/', PupilsAPIUpdate.as_view()),
+    # path('api/v1/pupil-detail/<int:pk>/', PupilsAPIDetail.as_view()),
+
+    # базовый класс API
+    # path('api/v1/pupil-list/', PupilsAPIView.as_view()),
+    # path('api/v1/pupil-list/<int:pk>/', PupilsAPIView.as_view()),
 ]
