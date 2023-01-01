@@ -12,7 +12,7 @@ class PupilsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pupils
-        fields = ('title', 'content', 'cat')
+        fields = ('title', 'content', 'cat', 'user')
 
 
 # работа с базовым классом Serializer

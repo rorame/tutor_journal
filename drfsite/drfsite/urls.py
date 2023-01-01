@@ -15,6 +15,9 @@ from rest_framework import routers
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # session-based authentication
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
+
     # routers
     # path('api/v1/', include(router.urls)),
 
