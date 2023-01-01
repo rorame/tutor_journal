@@ -8,13 +8,15 @@ from rest_framework import routers
 
 router = routers.SimpleRouter()
 router.register(r'pupil', PupilsViewSet)
+# router.register(r'pupil', PupilsViewSet, basename='pupil')
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # routers
-    path('api/v1/', include(router.urls)),  # http://127.0.0.1:8000/api/v1/pupil/
+    path('api/v1/', include(router.urls)),
 
     # viewsets
     # path('api/v1/pupil-list/', PupilsViewSet.as_view({'get': 'list'})),
