@@ -8,6 +8,8 @@ from .models import Pupils
 
 
 class PupilsSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Pupils
         fields = ('title', 'content', 'cat')

@@ -6,9 +6,9 @@ from pupils.views import *
 from rest_framework import routers
 
 
-router = routers.SimpleRouter()
-router.register(r'pupil', PupilsViewSet)
-# router.register(r'pupil', PupilsViewSet, basename='pupil')
+# router = routers.SimpleRouter()
+# router.register(r'pupil', PupilsViewSet)
+# # router.register(r'pupil', PupilsViewSet, basename='pupil')
 
 
 
@@ -16,7 +16,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # routers
-    path('api/v1/', include(router.urls)),
+    # path('api/v1/', include(router.urls)),
+
+    # adding 3 urls for better understanding how to work permissions
+    path('api/v1/pupil/', PupilAPIList.as_view()),
+    path('api/v1/pupil/<int:pk>/', PupilAPIUpdate.as_view()),
+    path('api/v1/pupil-delete/<int:pk>/', PupilAPIDestroy.as_view()),
 
     # viewsets
     # path('api/v1/pupil-list/', PupilsViewSet.as_view({'get': 'list'})),

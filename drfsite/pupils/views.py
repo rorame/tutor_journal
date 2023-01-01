@@ -2,34 +2,56 @@ from django.forms import model_to_dict
 from rest_framework import generics, viewsets
 from django.shortcuts import render
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Pupils, Category
+from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import PupilsSerializer
 
 
-# viewset
-class PupilsViewSet(viewsets.ModelViewSet):
+# adding 3 simple classes for better understanding how to work permissions
+class PupilAPIList(generics.ListCreateAPIView):
     queryset = Pupils.objects.all()
     serializer_class = PupilsSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
-    # @action(methods=['get'], detail=False)
-    # def category(self, request):
-    #     cats = Category.objects.all()
-    #     return Response({'cats': [c.name for c in cats]})
 
-    # def get_queryset(self):
-    #     pk = self.kwargs.get('pk')
-    #
-    #     if not pk:
-    #         return Pupils.object.all()[:3]
-    #
-    #     return Pupils.objects.filter(pk=pk)
-    @action(methods=['get'], detail=True)
-    def category(self, request, pk=None):
-        cats = Category.objects.get(pk=pk)
-        return Response({'cats': cats.name})
+class PupilAPIUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Pupils.objects.all()
+    serializer_class = PupilsSerializer
+    permission_classes = (IsOwnerOrReadOnly, )
+
+
+class PupilAPIDestroy(generics.RetrieveDestroyAPIView):
+    queryset = Pupils.objects.all()
+    serializer_class = PupilsSerializer
+    # permission_classes = (IsAdminUser, )
+    # custom permission
+    permission_classes = (IsAdminOrReadOnly, )
+
+# viewset
+# class PupilsViewSet(viewsets.ModelViewSet):
+#     queryset = Pupils.objects.all()
+#     serializer_class = PupilsSerializer
+#
+#     # @action(methods=['get'], detail=False)
+#     # def category(self, request):
+#     #     cats = Category.objects.all()
+#     #     return Response({'cats': [c.name for c in cats]})
+#
+#     # def get_queryset(self):
+#     #     pk = self.kwargs.get('pk')
+#     #
+#     #     if not pk:
+#     #         return Pupils.object.all()[:3]
+#     #
+#     #     return Pupils.objects.filter(pk=pk)
+#     @action(methods=['get'], detail=True)
+#     def category(self, request, pk=None):
+#         cats = Category.objects.get(pk=pk)
+#         return Response({'cats': cats.name})
 
 
 
