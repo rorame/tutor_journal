@@ -2,7 +2,7 @@ from django.forms import model_to_dict
 from rest_framework import generics, viewsets
 from django.shortcuts import render
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -21,7 +21,8 @@ class PupilAPIList(generics.ListCreateAPIView):
 class PupilAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Pupils.objects.all()
     serializer_class = PupilsSerializer
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsOwnerOrReadOnly, )
 
 
 class PupilAPIDestroy(generics.RetrieveDestroyAPIView):
