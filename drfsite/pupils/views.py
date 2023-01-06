@@ -11,18 +11,25 @@ from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import PupilsSerializer
 
 
+# custom pagination class
+# class PupilAPIListPagination(PageNumberPagination):
+#     page_size = 3
+#     page_size_query_param = 'page_size'
+#     max_page_size = 10000
+
 # adding 3 simple classes for better understanding how to work permissions
 class PupilAPIList(generics.ListCreateAPIView):
     queryset = Pupils.objects.all()
     serializer_class = PupilsSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, )
+    # parser_classes = PupilAPIListPagination
 
 
 class PupilAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Pupils.objects.all()
     serializer_class = PupilsSerializer
-    permission_classes = (IsAuthenticated,)
-    # permission_classes = (IsOwnerOrReadOnly, )
+    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsOwnerOrReadOnly, )
 
 
 class PupilAPIDestroy(generics.RetrieveDestroyAPIView):
